@@ -10,11 +10,13 @@ ${sucesso}
 	<table>
 		<tr>
 			<td>Titulo</td>
+			<td>Sumário</td>
 			<td>Valores</td>
 		</tr>
 		<c:forEach items="${products}" var="product">
 			<tr>
 				<td>${product.title}</td>
+				<td><a href="${product.summaryPath}">Sumário</a></td>
 				<td>
 					<c:forEach items="${product.prices}" var="price"> 
 						[${price.value} - ${price.bookType}]

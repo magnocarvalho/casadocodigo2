@@ -7,26 +7,35 @@
 </head>
 <body>
 
-<form:form method="post" action="${spring:mvcUrl('saveProduct').build()}" commandName="product">
+<form:form method="post" action="${spring:mvcUrl('saveProduct').build()}" commandName="product" enctype="multipart/form-data">
 	<div>
 		<label for="title">Titulo</label>
 		<form:input path="title"/>
 		<form:errors path="title"/>
 	</div>
+	
 	<div>
 		<label for="description">Descrição</label>
 		<form:textarea path="description" rows="10" cols="20"/>
 		<form:errors path="description"/>
 	</div>
+	
 	<div>
 		<label for="pages">Número de paginas</label>
 		<form:input path="pages"/>
 		<form:errors path="pages"/>
 	</div>
+	
 	<div>
 		<label for="releaseDate">Data de lançamento</label>
 		<form:input path="releaseDate" type="date"/>
 		<form:errors path="releaseDate"/>
+	</div>
+	
+	<div>
+		<label for="summary">Sumario do livro</label>
+		<input type="file" name="summary"/>
+		<form:errors path="summaryPath"/>
 	</div>
 	
 	<c:forEach items="${types}" var="bookType" varStatus="status">

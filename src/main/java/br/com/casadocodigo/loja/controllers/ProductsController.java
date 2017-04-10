@@ -6,22 +6,24 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.casadocodigo.loja.daos.ProductDAO;
 import br.com.casadocodigo.loja.models.BookType;
 import br.com.casadocodigo.loja.models.Product;
-import br.com.casadocodigo.loja.validation.ProductValidator;
+import br.com.casadocodigo.loja.utils.FileSaver;
 
 @Controller
 @Transactional
 @RequestMapping("/produtos")
 public class ProductsController {
+	
+	@Autowired
+	private FileSaver fileSaver;
 	
 	@Autowired
 	private ProductDAO productDAO;
@@ -41,10 +43,15 @@ public class ProductsController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, name="saveProduct")
-	public ModelAndView save(@Valid Product product, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+	public ModelAndView save(MultipartFile summary, @Valid Product product, BindingResult bindingResult, RedirectAttributes redirectAttributes){
 		if(bindingResult.hasErrors()){
 			return form(product);
 		}
+		
+		System.out.println(summary.getName() + ";" + summary.getOriginalFilename());
+		String webPath = fileSaver.write("uploaded-images",summary);
+		product.setSummaryPath(webPath);
+		
 		productDAO.save(product);
 		redirectAttributes.addFlashAttribute("sucesso", "Produto cadastrado com sucesso");
 		return new ModelAndView("redirect:/produtos");
