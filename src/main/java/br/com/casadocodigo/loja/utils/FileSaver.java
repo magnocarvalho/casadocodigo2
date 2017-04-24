@@ -26,6 +26,8 @@ public class FileSaver {
 			//url de acesso ao arquivo
 			//return "https://s3.amazonaws.com/casadocodigo2/" + multipartFile.getOriginalFilename() + "?noAuth=true";
 			
+			//http://localhost:9444/s3/casadocodigo2/logo-multitec_pequeno.png
+			
 			return multipartFile.getOriginalFilename();
 			
 		} catch (AmazonClientException | IOException e) {

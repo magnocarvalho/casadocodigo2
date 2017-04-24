@@ -12,6 +12,7 @@ ${sucesso}
 			<td>Titulo</td>
 			<td>Sumário</td>
 			<td>Valores</td>
+			<td>Imagem</td>
 		</tr>
 		<c:forEach items="${products}" var="product">
 			<tr>
@@ -22,6 +23,7 @@ ${sucesso}
 						[${price.value} - ${price.bookType}]
 					</c:forEach>
 				</td>
+				<td><img src="http://localhost:9444/s3/casadocodigo2/logo-multitec_pequeno.png?noAuth=true"></td>
 			</tr>
 		</c:forEach>
 	</table>

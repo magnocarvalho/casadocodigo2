@@ -64,6 +64,7 @@ public class ProductsController {
 	
 	//"<c:url value='/produtos/download/${product.summaryPath}' />"
 	//"/casadocodigo2/produtos/download/123"
+	//http://localhost:9444/s3/casadocodigo2/logo-multitec_pequeno.png
 	
 	@RequestMapping(method=RequestMethod.GET, value="/download")
     public void downloadFile(HttpServletResponse response, String file) throws IOException {
