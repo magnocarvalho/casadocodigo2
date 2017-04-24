@@ -16,7 +16,7 @@ ${sucesso}
 		<c:forEach items="${products}" var="product">
 			<tr>
 				<td>${product.title}</td>
-				<td><a href="${product.summaryPath}">Sumário</a></td>
+				<td><a href="<c:url value='/produtos/download?file=${product.summaryPath}'/>">Sumário</a></td>
 				<td>
 					<c:forEach items="${product.prices}" var="price"> 
 						[${price.value} - ${price.bookType}]

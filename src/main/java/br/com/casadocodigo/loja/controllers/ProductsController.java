@@ -1,10 +1,15 @@
 package br.com.casadocodigo.loja.controllers;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,12 +54,41 @@ public class ProductsController {
 		}
 		
 		System.out.println(summary.getName() + ";" + summary.getOriginalFilename());
-		String webPath = fileSaver.write("uploaded-images",summary);
+		String webPath = fileSaver.write(summary);
 		product.setSummaryPath(webPath);
 		
 		productDAO.save(product);
 		redirectAttributes.addFlashAttribute("sucesso", "Produto cadastrado com sucesso");
 		return new ModelAndView("redirect:/produtos");
+	}
+	
+	//"<c:url value='/produtos/download/${product.summaryPath}' />"
+	//"/casadocodigo2/produtos/download/123"
+	
+	@RequestMapping(method=RequestMethod.GET, value="/download")
+    public void downloadFile(HttpServletResponse response, String file) throws IOException {
+		System.out.println("Teste");
+		System.out.println(file);
+		
+		InputStream inputStream = fileSaver.read(file);
+		
+//		File file = new File("C:\teste.txt");
+//		
+//		String mimeType= URLConnection.guessContentTypeFromName(file.getName());
+//		
+//		response.setContentType(mimeType);
+//        
+//        response.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() +"\""));
+//         
+//        response.setContentLength((int)file.length());
+// 
+//        InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+// 
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", file));
+		FileCopyUtils.copy(inputStream, response.getOutputStream());
+        
+        //return "redirect:/produtos";
 	}
 	
 //	@InitBinder
