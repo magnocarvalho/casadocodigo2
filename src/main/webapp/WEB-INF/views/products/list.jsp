@@ -13,6 +13,7 @@ ${sucesso}
 			<td>Sumário</td>
 			<td>Valores</td>
 			<td>Imagem</td>
+			<td>Download</td>
 		</tr>
 		<c:forEach items="${products}" var="product">
 			<tr>
@@ -24,6 +25,7 @@ ${sucesso}
 					</c:forEach>
 				</td>
 				<td><img src="http://localhost:9444/s3/casadocodigo2/logo-multitec_pequeno.png?noAuth=true"></td>
+				<td><a href="http://localhost:9444/s3/casadocodigo2/logo-multitec_pequeno.png?noAuth=true">Download</a></td>
 			</tr>
 		</c:forEach>
 	</table>
