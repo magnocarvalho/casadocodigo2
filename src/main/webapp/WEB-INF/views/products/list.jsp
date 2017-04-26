@@ -24,8 +24,8 @@ ${sucesso}
 						[${price.value} - ${price.bookType}]
 					</c:forEach>
 				</td>
-				<td><img src="http://localhost:9444/s3/casadocodigo2/logo-multitec_pequeno.png?noAuth=true"></td>
-				<td><a href="http://localhost:9444/s3/casadocodigo2/logo-multitec_pequeno.png?noAuth=true">Download</a></td>
+				<td><img src="http://localhost:9444/s3/casadocodigo2/${product.summaryPath}?noAuth=true"></td>
+				<td><a href="http://localhost:9444/s3/casadocodigo2/${product.summaryPath}?noAuth=true">Download</a></td>
 			</tr>
 		</c:forEach>
 	</table>

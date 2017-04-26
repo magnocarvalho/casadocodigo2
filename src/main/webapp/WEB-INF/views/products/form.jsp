@@ -7,7 +7,9 @@
 </head>
 <body>
 
-<form:form method="post" action="${spring:mvcUrl('saveProduct').build()}" commandName="product" enctype="multipart/form-data">
+<!-- action="${spring:mvcUrl('saveProduct').build()}" -->
+<c:url var="post_url"  value="/produtos" />
+<form:form method="post" action="${post_url}" commandName="product" enctype="multipart/form-data">
 	<div>
 		<label for="title">Titulo</label>
 		<form:input path="title"/>
