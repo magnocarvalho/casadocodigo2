@@ -15,13 +15,20 @@ import com.amazonaws.services.s3.model.S3Object;
 @Component
 public class FileSaver {
 	
+	private String bucketName = "casadocodigo2";
+	
 	@Autowired
 	private AmazonS3Client s3;
 	
+	/**
+	 * Efetua a gravação do arquivo no servidor
+	 * @param multipartFile MultipartFile
+	 * @return
+	 */
 	public String write(MultipartFile multipartFile) {
 		
 		try {
-			s3.putObject("casadocodigo2", multipartFile.getOriginalFilename(), multipartFile.getInputStream(), new ObjectMetadata());
+			s3.putObject(bucketName, multipartFile.getOriginalFilename(), multipartFile.getInputStream(), new ObjectMetadata());
 			
 			//url de acesso ao arquivo
 			//return "https://s3.amazonaws.com/casadocodigo2/" + multipartFile.getOriginalFilename() + "?noAuth=true";
@@ -35,10 +42,23 @@ public class FileSaver {
 		}
 	}
 	
+	/**
+	 * Obtém o InputStream do arquivo que está no servidor
+	 * @param key String (nome do arquivo)
+	 * @return InputStream
+	 */
 	public InputStream read(String key){
-		S3Object object = s3.getObject("casadocodigo2", key);
+		S3Object object = s3.getObject(bucketName, key);
         InputStream inputStream = object.getObjectContent();
         return inputStream;
+	}
+	
+	/**
+	 * Efetua a exclusão/delete do arquivo que está no servidor
+	 * @param key String (nome do arquivo)
+	 */
+	public void deleteObject(String key){
+		s3.deleteObject(bucketName, key);
 	}
 	
 //	private AmazonS3Client client() {

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,28 +69,25 @@ public class ProductsController {
 	
 	@RequestMapping(method=RequestMethod.GET, value="/download")
     public void downloadFile(HttpServletResponse response, String file) throws IOException {
-		System.out.println("Teste");
-		System.out.println(file);
-		
+				
 		InputStream inputStream = fileSaver.read(file);
 		
-//		File file = new File("C:\teste.txt");
-//		
-//		String mimeType= URLConnection.guessContentTypeFromName(file.getName());
-//		
-//		response.setContentType(mimeType);
-//        
-//        response.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() +"\""));
-//         
-//        response.setContentLength((int)file.length());
-// 
-//        InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
-// 
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", file));
-		FileCopyUtils.copy(inputStream, response.getOutputStream());
-        
-        //return "redirect:/produtos";
+		FileCopyUtils.copy(inputStream, response.getOutputStream());   
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/excluir/{id}")
+	public ModelAndView excluir(@PathVariable Integer id, RedirectAttributes redirectAttributes){
+		
+		Product product = productDAO.find(id);
+		
+		fileSaver.deleteObject(product.getSummaryPath());
+		
+		productDAO.remove(product);
+		
+		redirectAttributes.addFlashAttribute("sucesso", "Produto removido com sucesso");
+		return new ModelAndView("redirect:/produtos");
 	}
 	
 //	@InitBinder

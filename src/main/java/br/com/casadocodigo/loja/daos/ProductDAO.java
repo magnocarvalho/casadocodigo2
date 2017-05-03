@@ -22,4 +22,12 @@ public class ProductDAO {
 	public List<Product> list() {
 		return manager.createQuery("select distinct(p) from Product p join fetch p.prices",Product.class).getResultList();
 	}
+	
+	public void remove(Product product){
+		manager.remove(product);
+	}
+	
+	public Product find(Integer id){
+		return manager.find(Product.class, id);
+	}
 }
