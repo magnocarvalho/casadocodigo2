@@ -1,4 +1,5 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
@@ -10,6 +11,9 @@
 <!-- action="${spring:mvcUrl('saveProduct').build()}" -->
 <c:url var="post_url"  value="/produtos" />
 <form:form method="post" action="${post_url}" commandName="product" enctype="multipart/form-data">
+	
+	<div><form:hidden path="id"/></div>
+		
 	<div>
 		<label for="title">Titulo</label>
 		<form:input path="title"/>
@@ -43,7 +47,7 @@
 	<c:forEach items="${types}" var="bookType" varStatus="status">
 		<div>
 			<label for="price_${bookType}">${bookType}</label>
-			<input type="text" name="prices[${status.index}].value" id="price_${bookType}"/>
+			<input type="text" name="prices[${status.index}].value" id="price_${bookType}" value="<fmt:formatNumber value="${precos[status.index]}" pattern="#,##0.00"/>"/>
 			<input type="hidden" name="prices[${status.index}].bookType" value="${bookType}"/>
 		</div>
 	</c:forEach>

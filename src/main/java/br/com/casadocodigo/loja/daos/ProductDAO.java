@@ -19,6 +19,10 @@ public class ProductDAO {
 		manager.persist(product);
 	}
 	
+	public void update(Product product){
+		manager.merge(product);
+	}
+	
 	public List<Product> list() {
 		return manager.createQuery("select distinct(p) from Product p join fetch p.prices",Product.class).getResultList();
 	}
@@ -30,4 +34,5 @@ public class ProductDAO {
 	public Product find(Integer id){
 		return manager.find(Product.class, id);
 	}
+	
 }

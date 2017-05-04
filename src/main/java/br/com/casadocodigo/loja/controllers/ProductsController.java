@@ -2,6 +2,7 @@ package br.com.casadocodigo.loja.controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.casadocodigo.loja.daos.ProductDAO;
 import br.com.casadocodigo.loja.models.BookType;
+import br.com.casadocodigo.loja.models.Price;
 import br.com.casadocodigo.loja.models.Product;
 import br.com.casadocodigo.loja.utils.FileSaver;
 
@@ -35,9 +38,22 @@ public class ProductsController {
 	private ProductDAO productDAO;
 	
 	@RequestMapping("/form")
-	public ModelAndView form(Product product){
+	public ModelAndView form(@ModelAttribute Product product){
 		ModelAndView modelAndView = new ModelAndView("products/form");
+		
+		modelAndView.addObject("product", product);
+		
 		modelAndView.addObject("types", BookType.values());
+		
+		BigDecimal[] precos = new BigDecimal[3];
+		int i = 0;
+		for(Price price : product.getPrices()){
+			precos[i] = price.getValue();
+			i++;
+		}
+		
+		modelAndView.addObject("precos", precos);
+		
 		return modelAndView;
 	}
 	
@@ -54,12 +70,17 @@ public class ProductsController {
 			return form(product);
 		}
 		
-		System.out.println(summary.getName() + ";" + summary.getOriginalFilename());
-		String webPath = fileSaver.write(summary);
-		product.setSummaryPath(webPath);
+		String arquivo = fileSaver.write(summary);
+		product.setSummaryPath(arquivo);
+				
+		if(product.getId() == null){
+			productDAO.save(product);
+			redirectAttributes.addFlashAttribute("sucesso", "Produto cadastrado com sucesso");
+		}else{
+			productDAO.update(product);
+			redirectAttributes.addFlashAttribute("sucesso", "Produto alterado com sucesso");
+		}
 		
-		productDAO.save(product);
-		redirectAttributes.addFlashAttribute("sucesso", "Produto cadastrado com sucesso");
 		return new ModelAndView("redirect:/produtos");
 	}
 	
@@ -88,6 +109,12 @@ public class ProductsController {
 		
 		redirectAttributes.addFlashAttribute("sucesso", "Produto removido com sucesso");
 		return new ModelAndView("redirect:/produtos");
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/alterar/{id}")
+	public ModelAndView alterar(@PathVariable Integer id){
+		Product product = productDAO.find(id);
+		return form(product);
 	}
 	
 //	@InitBinder

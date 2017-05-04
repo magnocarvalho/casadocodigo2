@@ -28,6 +28,8 @@ public class FileSaver {
 	public String write(MultipartFile multipartFile) {
 		
 		try {
+			if(multipartFile == null || multipartFile.getOriginalFilename() == null || multipartFile.getOriginalFilename().length() == 0)return null;
+			
 			s3.putObject(bucketName, multipartFile.getOriginalFilename(), multipartFile.getInputStream(), new ObjectMetadata());
 			
 			//url de acesso ao arquivo

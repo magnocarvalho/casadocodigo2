@@ -5,10 +5,13 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import org.springframework.format.annotation.NumberFormat;
+
 @Embeddable
 public class Price {
 	
 	@Column(scale = 2)
+	@NumberFormat(pattern="#,##0.00")
 	private BigDecimal value;
 	
 	private BookType bookType;
