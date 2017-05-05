@@ -71,7 +71,14 @@ public class ProductsController {
 		}
 		
 		String arquivo = fileSaver.write(summary);
-		product.setSummaryPath(arquivo);
+		if(arquivo != null){
+			if(product.getSummaryPath() == null || product.getSummaryPath().length() == 0){
+				product.setSummaryPath(arquivo);
+			}else if(!product.getSummaryPath().equals(arquivo)){
+				fileSaver.deleteObject(product.getSummaryPath());
+				product.setSummaryPath(arquivo);
+			}
+		}
 				
 		if(product.getId() == null){
 			productDAO.save(product);
@@ -114,6 +121,15 @@ public class ProductsController {
 	@RequestMapping(method=RequestMethod.GET, value="/alterar/{id}")
 	public ModelAndView alterar(@PathVariable Integer id){
 		Product product = productDAO.find(id);
+		return form(product);
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/apagarImagem/{id}")
+	public ModelAndView apagerImagem(@PathVariable Integer id){
+		Product product = productDAO.find(id);
+		fileSaver.deleteObject(product.getSummaryPath());
+		product.setSummaryPath(null);
+		productDAO.update(product);
 		return form(product);
 	}
 	

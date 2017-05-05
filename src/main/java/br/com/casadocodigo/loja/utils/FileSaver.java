@@ -60,6 +60,7 @@ public class FileSaver {
 	 * @param key String (nome do arquivo)
 	 */
 	public void deleteObject(String key){
+		if(key == null)return;
 		s3.deleteObject(bucketName, key);
 	}
 	

@@ -38,10 +38,17 @@
 		<form:errors path="releaseDate"/>
 	</div>
 	
+	<div><form:hidden path="summaryPath"/></div>
+	
+	<c:if test="${not empty product.summaryPath}">
+    	Imagem atual<br/>
+    	<img src="http://localhost:9444/s3/casadocodigo2/${product.summaryPath}?noAuth=true"><br/>
+    	<a href="<c:url value='/produtos/apagarImagem/${product.id}'/>">Apagar Imagem</a>
+	</c:if>
+	
 	<div>
 		<label for="summary">Sumario do livro</label>
 		<input type="file" name="summary"/>
-		<form:errors path="summaryPath"/>
 	</div>
 	
 	<c:forEach items="${types}" var="bookType" varStatus="status">
