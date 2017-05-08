@@ -4,7 +4,7 @@
 <title>Lista</title>
 </head>
 <body>
-
+${pathImages}
 ${sucesso}
 
 <a href="<c:url value='/produtos/form'/>">Incluir novo</a>
