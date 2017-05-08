@@ -42,7 +42,7 @@
 	
 	<c:if test="${not empty product.summaryPath}">
     	Imagem atual<br/>
-    	<img src="http://localhost:9444/s3/casadocodigo2/${product.summaryPath}?noAuth=true"><br/>
+    	<img src="${pathImages}${product.summaryPath}?noAuth=true"><br/>
     	<a href="<c:url value='/produtos/apagarImagem/${product.id}'/>">Apagar Imagem</a>
 	</c:if>
 	
