@@ -19,9 +19,12 @@ ${sucesso}
 			<td>Alterar</td>
 			<td>Excluir</td>
 		</tr>
+		
 		<c:forEach items="${products}" var="product">
 			<tr>
-				<td>${product.title}</td>
+				<td>
+					<a href="<c:url value='/produtos/show?id=${product.id}'/>">${product.title}</a>
+				</td>
 				
 				<td><a href="<c:url value='/produtos/download?file=${product.summaryPath}'/>">Sumário</a></td>
 				

@@ -133,6 +133,14 @@ public class ProductsController {
 		return form(product);
 	}
 	
+	@RequestMapping(method=RequestMethod.GET,value="/show")
+	public ModelAndView show(Integer id){
+		ModelAndView modelAndView = new ModelAndView("products/show");
+		Product product = productDAO.get(id);
+		modelAndView.addObject("product", product);
+		return modelAndView;
+	}
+	
 //	@InitBinder
 //	protected void initBinder(WebDataBinder binder) {
 //		binder.setValidator(new ProductValidator());
