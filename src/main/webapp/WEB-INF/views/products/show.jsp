@@ -5,6 +5,8 @@
 </head>
 <body>
 
+<a href="<c:url value='/shopping'/>">Seu carrinho (${shoppingCart.quantity}) </a>
+
 <h1>${product.title}</h1>
 
 <p>${product.description}</p>

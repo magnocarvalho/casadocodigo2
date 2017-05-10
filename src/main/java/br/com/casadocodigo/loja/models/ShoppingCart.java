@@ -48,9 +48,9 @@ public class ShoppingCart {
 	
 	public BigDecimal getTotal(){
 		BigDecimal total = BigDecimal.ZERO;
-		//TODO change to reduce?
+		//change to reduce?
 		for(ShoppingItem item : items.keySet()){
-			total = total.add(getTotal(item));
+			total = total.add(item.getTotal(getQuantity(item)));
 		}
 		return total;
 	}
