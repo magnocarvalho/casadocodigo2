@@ -5,10 +5,14 @@
 </head>
 <body>
 
-${sucesso}
+<c:if test="${not empty sucesso}">
+${sucesso}<p/>
+</c:if>
 
-<a href="<c:url value='/produtos/form'/>">Incluir novo</a>
-
+<a href="<c:url value='/shopping'/>">Seu carrinho (${shoppingCart.quantity}) </a>
+<p/>
+<a href="<c:url value='/produtos/form'/>">Incluir novo item ao catálogo</a>
+<p/>
 	<table>
 		<tr>
 			<td>Titulo</td>
