@@ -33,8 +33,12 @@
       </tbody>
       <tfoot>
         <tr>
-          <td><input type="submit" class="checkout" name="checkout" value="Finalizar compra " id="checkout"/></td>
-          <td>Total: ${shoppingCart.total}</td><td></td>
+          <td>
+          	<form action="${spring:mvcUrl('PC#checkout').build()}" method="post">
+          		<input type="submit" name="checkout" value="Finalizar compra " id="checkout"/>
+          	</form>
+          </td>
+          <td>Total: ${shoppingCart.total}</td>
         </tr>
       </tfoot>
 </table>
