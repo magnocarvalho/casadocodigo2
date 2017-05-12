@@ -58,4 +58,5 @@ public class ShoppingCartController {
 		shoppingCart.remove(createItem(productId, bookType));
 		return "redirect:/shopping";
 	}
+	
 }

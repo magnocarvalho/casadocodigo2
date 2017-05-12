@@ -71,7 +71,7 @@
 		<scope>runtime</scope>
 	</dependency>
 	
-	<!-- configuracao jpa e driver -->
+<!-- configuracao jpa e driver -->
 	<dependency>
 		<groupId>org.hibernate</groupId>
 		<artifactId>hibernate-entitymanager</artifactId>
@@ -98,7 +98,7 @@
 		<version>5.1.15</version>
 	</dependency>
 	
-	<!-- JSR 303 with Hibernate Validator -->
+<!-- JSR 303 with Hibernate Validator -->
 	<dependency>
 		<groupId>javax.validation</groupId>
 		<artifactId>validation-api</artifactId>
@@ -110,7 +110,7 @@
 		<version>4.1.0.Final</version>
 	</dependency>
 	
-	<!-- s3ninja -->
+<!-- s3ninja -->
 	<dependency>
 		<groupId>com.scireum</groupId>
 		<artifactId>s3ninja</artifactId>
@@ -122,7 +122,7 @@
 		<version>1.9.11</version>
 	</dependency>
 	
-	<!-- JSON -->
+<!-- JSON -->
 	<dependency>
 		<groupId>com.fasterxml.jackson.core</groupId>
 		<artifactId>jackson-core</artifactId>
@@ -132,6 +132,18 @@
 		<groupId>com.fasterxml.jackson.core</groupId>
 		<artifactId>jackson-databind</artifactId>
 		<version>2.5.1</version>
+	</dependency>
+	
+<!-- cache -->
+	<dependency>
+		<groupId>com.google.guava</groupId>
+		<artifactId>guava</artifactId>
+		<version>18.0</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context-support</artifactId>
+		<version>4.2.0.RELEASE</version>
 	</dependency>
 	
   </dependencies>
