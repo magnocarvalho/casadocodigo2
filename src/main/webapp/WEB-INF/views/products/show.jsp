@@ -1,4 +1,5 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
 <head>
 <title>${product.title}</title>
@@ -15,7 +16,7 @@
 
 <img src="${pathImages}${product.summaryPath}?noAuth=true">
 
-<form action="<c:url value='/shopping'/>" method="post">
+<form:form servletRelativeAction="/shopping">
 
 	<input type="hidden" value="${product.id}" name="productId"/>
 	
@@ -37,7 +38,7 @@
 
 	<input type="submit" value="Comprar"/>
 
-</form>
+</form:form>
 
 </body>
 </html>
