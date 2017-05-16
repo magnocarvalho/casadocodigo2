@@ -58,5 +58,9 @@ public class ShoppingCart {
 	public void remove(ShoppingItem shoppingItem) {
 		items.remove(shoppingItem);
 	}
+	
+	public void removeAll(){
+		items.clear();
+	}
 
 }

@@ -9,7 +9,7 @@
 <security:authorize access="isAuthenticated()">
 	<security:authentication property="principal" var="user"/>
 	<div>
-	Olá ${user.name}
+	Olá ${user.name}<br><a href="<c:url value='/logout'/>">Logout</a>
 	</div>
 </security:authorize>
 

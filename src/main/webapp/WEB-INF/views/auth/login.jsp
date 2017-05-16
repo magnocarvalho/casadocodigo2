@@ -5,8 +5,8 @@
 </head>
 <body>
 
-	<h3>Login com Username and Password</h3>
-	<form:form servletRelativeAction="/login">
+	<h3>Login</h3>
+	<form:form servletRelativeAction="/logar">
 		<table>
 			<tr>
 				<td>User:</td>
