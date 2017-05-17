@@ -32,6 +32,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		.and()
 		.exceptionHandling()
 		.accessDeniedPage("/WEB-INF/views/errors/403.jsp");
+		
+		//permitindo acesso a recusos como .js e outros
+		//antMatchers("/resources/**", "/webjars/**").permitAll()
 	}
 	
 	@Override

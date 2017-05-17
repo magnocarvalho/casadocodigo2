@@ -1,27 +1,29 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
-<%@taglib tagdir="/WEB-INF/tags" prefix="customTags"%>
+<html>
+<head>
+<title>Lista</title>
+</head>
+<body>
 
-<customTags:page bodyClass="" title="">
+<security:authorize access="isAuthenticated()">
+	<security:authentication property="principal" var="user"/>
+	<div>
+	Olá ${user.name}<br><a href="<c:url value='/logout'/>">Logout</a>
+	</div>
+</security:authorize>
 
-	<security:authorize access="isAuthenticated()">
-		<security:authentication property="principal" var="user"/>
-		<div>
-		Olá ${user.name}<br><a href="<c:url value='/logout'/>">Logout</a>
-		</div>
-	</security:authorize>
-	
-	<c:if test="${not empty sucesso}">
-		${sucesso}<p/>
-	</c:if>
-	
-	<a href="<c:url value='/shopping'/>">Seu carrinho (${shoppingCart.quantity}) </a>
-	<p/>
-	
-	<security:authorize access="hasRole('ROLE_ADMIN')">
-		<a href="<c:url value='/produtos/form'/>">Incluir novo item ao catálogo</a>
-		<p/>
-	</security:authorize>
+<c:if test="${not empty sucesso}">
+${sucesso}<p/>
+</c:if>
+
+<a href="<c:url value='/shopping'/>">Seu carrinho (${shoppingCart.quantity}) </a>
+<p/>
+
+<security:authorize access="hasRole('ROLE_ADMIN')">
+<a href="<c:url value='/produtos/form'/>">Incluir novo item ao catálogo</a>
+<p/>
+</security:authorize>
 
 	<table>
 		<tr>
@@ -59,4 +61,5 @@
 		</c:forEach>
 	</table>
 
-</customTags:page>
+</body>
+</html>
