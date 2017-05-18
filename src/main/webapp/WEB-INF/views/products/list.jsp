@@ -1,13 +1,15 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="customTags"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <customTags:page bodyClass="" title="">
 
 	<security:authorize access="isAuthenticated()">
 		<security:authentication property="principal" var="user"/>
 		<div>
-		Olá ${user.name}<br><a href="<c:url value='/logout'/>">Logout</a>
+			<spring:message code="users.welcome" arguments="${user.name}"/><br><a href="<c:url value='/logout'/>">Logout</a>
 		</div>
 	</security:authorize>
 	
@@ -15,13 +17,15 @@
 		${sucesso}<p/>
 	</c:if>
 	
-	<a href="<c:url value='/shopping'/>">Seu carrinho (${shoppingCart.quantity}) </a>
+	<a href="<c:url value='/shopping'/>"> <fmt:message key="shoppingCart.title"/> (${shoppingCart.quantity}) </a>
 	<p/>
 	
 	<security:authorize access="hasRole('ROLE_ADMIN')">
 		<a href="<c:url value='/produtos/form'/>">Incluir novo item ao catálogo</a>
 		<p/>
 	</security:authorize>
+	
+	<h3><spring:message code="products.list-title"/></h3>
 
 	<table>
 		<tr>
