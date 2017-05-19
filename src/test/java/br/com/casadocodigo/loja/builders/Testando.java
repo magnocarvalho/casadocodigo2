@@ -1,4 +1,4 @@
-package br.com.casadocodigo.builders;
+package br.com.casadocodigo.loja.builders;
 
 import br.com.casadocodigo.loja.daos.ProductDAOTest;
 
