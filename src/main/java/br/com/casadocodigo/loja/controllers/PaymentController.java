@@ -3,6 +3,8 @@ package br.com.casadocodigo.loja.controllers;
 import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +13,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.casadocodigo.loja.models.ShoppingCart;
+import br.com.casadocodigo.loja.models.User;
 import br.com.casadocodigo.service.IntegrandoComPagamento;
 
 @Controller
@@ -22,6 +25,9 @@ public class PaymentController {
 	
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Autowired
+	private MailSender mailer;
 	
 	//Modo síncrono de integração
 //	@RequestMapping(value = "checkout", method = RequestMethod.POST)
@@ -58,10 +64,10 @@ public class PaymentController {
 	
 	//DeferredResult para fazer integração assíncrona (com mais controles) com recurso externo
 	@RequestMapping(value = "checkout", method = RequestMethod.POST)
-	public DeferredResult<ModelAndView> checkout() {
+	public DeferredResult<ModelAndView> checkout(@AuthenticationPrincipal User user) {
 		BigDecimal total = shoppingCart.getTotal();
 		DeferredResult<ModelAndView> result = new DeferredResult<ModelAndView>();
-		IntegrandoComPagamento integrandoComPagamento = new IntegrandoComPagamento(result, total, restTemplate);
+		IntegrandoComPagamento integrandoComPagamento = new IntegrandoComPagamento(result, total, restTemplate, user, mailer);
 		Thread thread = new Thread(integrandoComPagamento);
 		thread.start();
 		return result;
