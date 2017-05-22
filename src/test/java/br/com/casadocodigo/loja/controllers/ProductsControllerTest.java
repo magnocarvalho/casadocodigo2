@@ -2,6 +2,7 @@ package br.com.casadocodigo.loja.controllers;
 
 import java.util.List;
 
+import javax.servlet.Filter;
 import javax.transaction.Transactional;
 
 import org.junit.Assert;
@@ -9,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -44,17 +46,20 @@ public class ProductsControllerTest {
 	@Autowired
 	private WebApplicationContext wac;
 	
+	@Autowired
+	private Filter springSecurityFilterChain;
+	
 	private MockMvc mockMvc;
 	
 	@Before
-	public void setup() {
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+	public void setup() {		
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).addFilters(springSecurityFilterChain).build();
 	}
 	
 	@Test
 	@Transactional
 	public void shouldListAllBooksInTheHome() throws Exception {
-		System.out.println("Testando ProductsControllerTest");
+		System.out.println("Testando shouldListAllBooksInTheHome");
 		
 		productDAO.save(ProductBuilder.newProduct().buildOne());
 
@@ -75,6 +80,16 @@ public class ProductsControllerTest {
 		};
 		action.andExpect(modelAndViewMatcher).andExpect(MockMvcResultMatchers.forwardedUrl("/WEB-INF/views/products/list.jsp"));
 
+	}
+	
+	@Test
+	public void onlyAdminShoudAccessProductsForm() throws Exception {
+		System.out.println("Testando onlyAdminShoudAccessProductsForm");
+		
+		// poderia usar o isFound()
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/produtos/form").with(SecurityMockMvcRequestPostProcessors
+							.user("comprador@gmail.com").password("123456")
+							.roles("COMPRADOR"))).andExpect(MockMvcResultMatchers.status().is(403));
 	}
 	
 }

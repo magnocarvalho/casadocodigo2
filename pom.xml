@@ -184,6 +184,14 @@
 		<scope>test</scope>
 	</dependency>
 	
+<!-- Spring Security test -->
+	<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-test</artifactId>
+		<version>4.0.2.RELEASE</version>
+		<scope>test</scope>
+	</dependency>
+	
   </dependencies>
   
   <repositories>
