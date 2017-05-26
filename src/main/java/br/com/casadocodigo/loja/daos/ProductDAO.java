@@ -2,11 +2,15 @@ package br.com.casadocodigo.loja.daos;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.jpa.HibernateQuery;
+import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
 import br.com.casadocodigo.loja.models.BookType;
@@ -55,6 +59,12 @@ public class ProductDAO {
 		TypedQuery<BigDecimal> query = manager.createQuery("select sum(price.value) from Product p join	p.prices price where price.bookType =:bookType", BigDecimal.class);
 		query.setParameter("bookType", bookType);
 		return query.getSingleResult();
+	}
+	
+	public List<Map<String, Object>> listProdutos(){
+		Query query = manager.createQuery("select p.id, p.title, p.description from Product p");
+		((HibernateQuery)query).getHibernateQuery().setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+		return query.getResultList();
 	}
 	
 }

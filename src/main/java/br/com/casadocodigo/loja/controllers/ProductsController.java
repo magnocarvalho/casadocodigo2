@@ -3,6 +3,8 @@ package br.com.casadocodigo.loja.controllers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -150,5 +152,21 @@ public class ProductsController {
 //	protected void initBinder(WebDataBinder binder) {
 //		binder.setValidator(new ProductValidator());
 //	}
+	
+	@RequestMapping(method=RequestMethod.GET,value="/listaProdutos")
+	public ModelAndView listaProdutos(){
+		List<Map<String, Object>> lista = productDAO.listProdutos();
+		if(lista != null && lista.size() > 0){
+			for(int i = 0; i < lista.size(); i++){
+				System.out.println("Linha " + i);
+				Map<String, Object> mapLinha = lista.get(i);
+				for(String key : mapLinha.keySet()){
+					System.out.println(key + " " + mapLinha.get(key));
+				}
+			}
+		}
+		
+		return new ModelAndView("redirect:/produtos"); 
+	}
 	
 }

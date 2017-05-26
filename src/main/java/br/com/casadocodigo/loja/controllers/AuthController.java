@@ -23,7 +23,6 @@ public class AuthController {
 	}
 	
 	//o logout é automático pelo spring security, chamar /logout
-	
 	@RequestMapping("/logar")
     public ModelAndView logar(String username, String password) {
 		System.out.println(BCrypt.hashpw(password, BCrypt.gensalt())); //para salvar
